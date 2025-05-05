@@ -3,6 +3,10 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { AuthProvider } from "@/context/auth-context"
+import { SensorProvider } from "@/context/sensor-context"
+import { AlertProvider } from "@/context/alert-context"
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -21,7 +25,14 @@ export default function RootLayout({
     <html lang="fr" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          {children}
+          <AuthProvider>
+            <SensorProvider>
+              <AlertProvider>
+                {children}
+                <Toaster />
+              </AlertProvider>
+            </SensorProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
